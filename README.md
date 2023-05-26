@@ -7,8 +7,14 @@
 
 
 This project provides interactive visualizations of JAX computations.
+Square nodes are tensors. Green nodes represent inputs (in-binders) to the current level, and red
+nodes are outputs (out-binders).
+Circle tensors are operations, where purple nodes represent composite nodes, which
+have expandable inner computations.
 Composite nodes can be expanded using left-click and contracted using right-click.
-Space pauses the simulation.
+Space pauses the visualization.
+
+[![Example visualization of while-loop in JAX.](docs/example.gif)](docs/example.gif)
 
 ## Usage Example
 
