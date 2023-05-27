@@ -1,4 +1,4 @@
-# JaxPr Visualizer
+# Visual JaxPr Explorer
 
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 ![License Badge](https://img.shields.io/badge/License-GPL3-red)
@@ -13,8 +13,11 @@ Circle tensors are operations, where purple nodes represent composite nodes, whi
 have expandable inner computations.
 Composite nodes can be expanded using left-click and contracted using right-click.
 Space pauses the visualization.
+Any node can be deleted with "x".
 
-[![Example visualization of while-loop in JAX.](docs/example.gif)](docs/example.gif)
+<p align="center">
+  <img src="docs/example.gif" />
+</p>
 
 ## Usage Example
 

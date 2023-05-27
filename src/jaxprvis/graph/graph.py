@@ -1,43 +1,44 @@
+from abc import ABC, abstractmethod
 from typing import Tuple, Dict, List, Any
 
-from jax.core import AbstractValue, ShapedArray
+from jax import ShapedArray
+from jax._src.core import AbstractValue
 
 
-#TODO move this to networkx probably
+# TODO move this to networkx probably
 
-class Node:
+class Node(ABC):
     def __init__(self, node_id: str):
         super().__init__()
         self.node_id: str = node_id
         self.out_adj_list: List[Node] = []
 
-        self.phys: 'PhysicsObject' = None
-        self.assets: 'DisplayAssets' = None
+        self.phys = None
+        self.assets = None
 
     def __hash__(self):
         hash(self.node_id)
 
-    def prerender(self):
-        raise Exception("Unimplemented")
 
 
 class CodeNode(Node):
     def __init__(self, node_id: str, display_name: str, jaxpr: 'Graph'):
+        #TODO can we remove this usage of Graph from here?
         super().__init__(node_id)
         self.display_name: str = display_name
         self.jaxpr: 'Graph' = jaxpr
 
 
 class TensorNode(Node):
-    def __init__(self, node_id: str, aval: AbstractValue, is_input: bool = False, is_output: bool = False, literal: Any = None):
+    def __init__(self, node_id: str, aval: AbstractValue, is_input: bool = False, is_output: bool = False,
+                 literal: Any = None):
         super().__init__(node_id)
-
 
         # TODO: need better handling here
         if isinstance(aval, ShapedArray):
             self.shape = aval.shape
             self.dtype = aval.dtype
-        #elif aval == abstract_unit:
+        # elif aval == abstract_unit:
         #    self.shape = ()
         #    self.dtype = None
 
@@ -51,7 +52,6 @@ class OpNode(Node):
         super().__init__(node_id)
         self.primitive = primitive
         self.other = other
-
 
 class Graph:
     def __init__(self, nodes: Dict[str, Node] = None):
@@ -94,6 +94,7 @@ class Graph:
         return edgename
 
     def remove_recursive(self, node_id: str):
+        #TODO need to remove inner compute nodes
         node = self.nodes.pop(node_id)
         removed = [node]
 
@@ -102,8 +103,7 @@ class Graph:
 
         for remaining in self.nodes.values():
             if node in remaining.out_adj_list:
-               remaining.out_adj_list.remove(node)
+                remaining.out_adj_list.remove(node)
 
         return removed
-
 

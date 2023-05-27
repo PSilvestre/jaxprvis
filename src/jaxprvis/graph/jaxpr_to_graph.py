@@ -5,7 +5,7 @@ from typing import Dict
 
 from jax.core import Var, JaxprEqn, Jaxpr, ClosedJaxpr, Literal
 
-from jaxprvis.graph.graph import Graph, TensorNode, OpNode, CodeNode
+from jaxprvis.graph.graph import Graph, CodeNode, TensorNode, OpNode
 
 
 def add_var(names: Dict[Var, str], v: Var, g: Graph):
